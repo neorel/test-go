@@ -1,4 +1,4 @@
-package model
+package models
 
 type ErgastResponse struct {
 	MRData ErgastMRData `json:"MRData"`
@@ -19,6 +19,7 @@ type ErgastRace struct {
 	Date string `json:"date"`
 	Time string `json:"time"`
 	Laps []ErgastLap `json:"Laps"`
+	Results []ErgastResult `json:"Results"`
 }
 
 type ErgastCircuit struct {
@@ -43,4 +44,8 @@ type ErgastTiming struct {
 	DriverId string `json:"driverId"`
 	Position string `json:"position"`
 	Time string `json:"time"`
+}
+
+type ErgastResult struct {
+	NbLaps string `json:"laps"`
 }
