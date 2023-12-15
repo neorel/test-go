@@ -16,6 +16,8 @@ type ErgastRace struct {
 	Season string `json:"season"`
 	RaceName string `json:"raceName"`
 	Circuit ErgastCircuit `json:"Circuit"`
+	Date string `json:"date"`
+	Time string `json:"time"`
 	Laps []ErgastLap `json:"Laps"`
 }
 
