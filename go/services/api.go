@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"io/ioutil"
 	"github.com/neorel/test-go/models"
-	"strconv"
 )
 
 func fetch(url string) *[]byte {
@@ -24,14 +23,11 @@ func fetch(url string) *[]byte {
     return &data
 }
 
-func GetNbLaps(season string, gpNumber string) *int8 {
-	data := fetch(fmt.Sprintf("https://ergast.com/api/f1/%v/%v/results.json", season, gpNumber))
+func GetRaceResults(season string, raceNumber string) *models.Race {
+    data := fetch(fmt.Sprintf("https://ergast.com/api/f1/%v/%v/results.json", season, raceNumber))
 
     ergastResponse := ParseErgastResponse(*data)
-    nbLaps, _ := strconv.ParseInt((*ergastResponse).MRData.RaceTable.Races[0].Results[0].NbLaps, 10, 8)
-    nbLaps8 := int8(nbLaps)
-    
-    return &nbLaps8
+    return ConvertToRace(ergastResponse);
 }
 
 func GetLap(season string, gpNumber string, lapNumber int8) *models.Race {

@@ -18,13 +18,24 @@ func ParseErgastResponse(data []byte) *models.ErgastResponse {
 func ConvertToRace(ergastResponse *models.ErgastResponse) *models.Race {
 	ergastRace := (*ergastResponse).MRData.RaceTable.Races[0]
 
-	dateTime, _ := time.Parse("2008-03-16 04:30:00Z", ergastRace.Date + " " + ergastRace.Time) 
+	dateTime, _ := time.Parse("2008-03-16 04:30:00Z", ergastRace.Date + " " + ergastRace.Time)
+	nbLaps8 := int8(0)
+
+	if(len(ergastRace.Results) > 0) {
+		nbLaps, _ := strconv.ParseInt(ergastRace.Results[0].NbLaps, 10, 8)
+		nbLaps8 = int8(nbLaps)
+	}
 
 	race := models.Race{
 		Season: ergastRace.Season,
 		Name: ergastRace.RaceName,
 		DateTime: dateTime,
+		NbLaps: &nbLaps8,
 		Laps: []*models.Lap{},
+	}
+
+	if (ergastRace.Laps == nil || len(ergastRace.Laps) == 0) {
+		return &race
 	}
 
 	number, _ := strconv.ParseInt(ergastRace.Laps[0].Number, 10, 8)
