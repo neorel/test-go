@@ -6,12 +6,16 @@ type Race struct {
 	Season string `json:"season"`
 	Name string `json:"name"`
 	DateTime time.Time `json:"time"`
-	NbLaps *int8 `json:"nbLaps"`
-	Laps []*Lap `json:"laps"`
 }
 
-type Lap struct {
-	Number int8 `json:"number"`
+type RaceResults struct {
+	Race
+	NbLaps int8 `json:"nbLaps"`
+}
+
+type RaceLap struct {
+	Race
+	LapNumber int8 `json:"lapNumber"`
 	Timings []*Timing `json:"timings"`
 }
 

@@ -25,14 +25,14 @@ func InitRedis() bool {
 	return true
 }
 
-func SendLap(lap *models.Lap) bool{
-	lapJson, err := json.Marshal(lap)
+func SendRaceLap(raceLap *models.RaceLap) bool{
+	raceLapJson, err := json.Marshal(raceLap)
 	if err != nil {
 		fmt.Println(err)
 		return false
 	}
 
-	err = client.Set(ctx, "lap", string(lapJson), 0).Err()
+	err = client.Set(ctx, "raceLap", string(raceLapJson), 0).Err()
 	if err != nil {
 		fmt.Println(err)
 		return false

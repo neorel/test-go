@@ -28,25 +28,15 @@ func getRace(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	switch r.Method {
-	case "GET":
-		race := services.GetRaceResults(season, raceNumber)
-
-
-		jsonRace, _ := json.Marshal(race)
-		fmt.Fprintf(w, string(jsonRace))
-
-		for lapId := int8(1); lapId <= *race.NbLaps; lapId++ {
-			race := services.GetLap(season, raceNumber, lapId)
-
-			fmt.Println(*race);
-			lap := (*race).Laps[0]
-			fmt.Println(lap)
-			for _, timing := range lap.Timings {
-				fmt.Println(*timing)
-			}
-
-			services.SendLap(lap)
-		}
+	if r.Method != "GET" {
+		http.Error(w, "405 method not allowed.", http.StatusMethodNotAllowed)
+		return
 	}
+
+	raceResults := services.GetRaceResults(season, raceNumber)
+	jsonRaceResults, _ := json.Marshal(raceResults)
+	w.Write(jsonRaceResults)
+	fmt.Println(string(jsonRaceResults))
+
+	go services.RunLaps(season, raceNumber, raceResults.NbLaps)
 }

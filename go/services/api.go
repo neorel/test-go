@@ -23,16 +23,16 @@ func fetch(url string) *[]byte {
     return &data
 }
 
-func GetRaceResults(season string, raceNumber string) *models.Race {
+func GetRaceResults(season string, raceNumber string) *models.RaceResults {
     data := fetch(fmt.Sprintf("https://ergast.com/api/f1/%v/%v/results.json", season, raceNumber))
 
     ergastResponse := ParseErgastResponse(*data)
-    return ConvertToRace(ergastResponse);
+    return ConvertToRaceResults(ergastResponse);
 }
 
-func GetLap(season string, gpNumber string, lapNumber int8) *models.Race {
+func GetLap(season string, gpNumber string, lapNumber int8) *models.RaceLap {
 	data := fetch(fmt.Sprintf("https://ergast.com/api/f1/%v/%v/laps/%v.json", season, gpNumber, lapNumber))
 	
 	ergastResponse := ParseErgastResponse(*data)
-	return ConvertToRace(ergastResponse)
+	return ConvertToRaceLap(ergastResponse)
 }
