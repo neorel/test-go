@@ -32,7 +32,7 @@ func SendRaceLap(raceLap *models.RaceLap) bool{
 		return false
 	}
 
-	err = client.Set(ctx, "raceLap", string(raceLapJson), 0).Err()
+	err = client.Publish(ctx, "raceLap", string(raceLapJson)).Err()
 	if err != nil {
 		fmt.Println(err)
 		return false
