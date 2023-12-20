@@ -5,6 +5,8 @@ services:
       - "8083:8080"
     depends_on:
       - redis
+    # volumes:
+    #   - ./go:/home/go
 
   node:
     build: ./node
@@ -13,6 +15,15 @@ services:
       - "8082:3000"
     depends_on:
       - redis
+    # volumes:
+    # - ./node:/home/node
 
   redis:
     image: "redis:alpine"
+
+  vue:
+    build: ./vue
+    ports:
+      - "8080:8080"
+    # volumes:
+    #   - ./vue:/home/vue
