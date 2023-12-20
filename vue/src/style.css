@@ -1,0 +1,17 @@
+:root {
+  --color-dark: #000000;
+  --color-background: #3E3636;
+  --color-primary: #D72323;
+  --color-light: #F5EDED;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  width: 100%;
+  height: 100dvh;
+}
